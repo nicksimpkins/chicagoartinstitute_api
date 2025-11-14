@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Art Institute Browser{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .artwork-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+        .artwork-card { border: 1px solid #ddd; padding: 10px; border-radius: 8px; }
+        .artwork-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; }
+        .search-box { width: 100%; padding: 10px; font-size: 16px; margin-bottom: 20px; }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <h1><a href="{% url 'artworks:home' %}">Art Institute Explorer</a></h1>
+    {% block content %}{% endblock %}
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

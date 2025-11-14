@@ -1,0 +1,46 @@
+{% extends 'artworks/templates/base.html' %}
+
+{% block content %}
+<input type="text" id="searchInput" class="search-box" placeholder="Search artworks...">
+<div id="results" class="artwork-grid"></div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const resultsDiv = document.getElementById('results');
+    
+    async function searchArtworks(query) {
+        const response = await fetch(`/api/search/?q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+        
+        resultsDiv.innerHTML = '';
+        
+        if (data.data && data.data.length > 0) {
+            data.data.forEach(artwork => {
+                const card = document.createElement('div');
+                card.className = 'artwork-card';
+                card.innerHTML = `
+                    ${artwork.image_url ? `<img src="${artwork.image_url}" alt="${artwork.title}">` : ''}
+                    <h3><a href="/artwork/${artwork.id}/">${artwork.title}</a></h3>
+                    <p>${artwork.artist_display || 'Unknown Artist'}</p>
+                    <p>${artwork.date_display || ''}</p>
+                `;
+                resultsDiv.appendChild(card);
+            });
+        } else {
+            resultsDiv.innerHTML = '<p>No results found</p>';
+        }
+    }
+    
+    // Search on input with debouncing
+    let timeout;
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            searchArtworks(e.target.value);
+        }, 500);
+    });
+    
+    // Load initial results
+    searchArtworks('');
+</script>
+{% endblock %}
