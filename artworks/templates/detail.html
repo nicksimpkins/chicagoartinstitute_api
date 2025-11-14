@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ artwork.title }} - Art Institute Browser{% endblock %}
+
+{% block extra_css %}
+<style>
+    .detail-container { max-width: 900px; margin: 0 auto; }
+    .artwork-image { width: 100%; max-width: 800px; height: auto; border-radius: 8px; margin: 20px 0; }
+    .artwork-info { margin: 20px 0; }
+    .artwork-info h2 { margin-bottom: 10px; }
+    .artwork-info p { margin: 10px 0; line-height: 1.6; }
+    .back-link { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+    .info-label { font-weight: bold; color: #555; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <a href="{% url 'artworks:home' %}" class="back-link">← Back to Search</a>
+    
+    <div class="artwork-info">
+        <h2>{{ artwork.title }}</h2>
+        
+        {% if artwork.image_url %}
+            <img src="{{ artwork.image_url }}" alt="{{ artwork.title }}" class="artwork-image">
+        {% endif %}
+        
+        {% if artwork.artist_display %}
+            <p><span class="info-label">Artist:</span> {{ artwork.artist_display }}</p>
+        {% endif %}
+        
+        {% if artwork.date_display %}
+            <p><span class="info-label">Date:</span> {{ artwork.date_display }}</p>
+        {% endif %}
+        
+        {% if artwork.medium_display %}
+            <p><span class="info-label">Medium:</span> {{ artwork.medium_display }}</p>
+        {% endif %}
+        
+        {% if artwork.dimensions %}
+            <p><span class="info-label">Dimensions:</span> {{ artwork.dimensions }}</p>
+        {% endif %}
+        
+        {% if artwork.credit_line %}
+            <p><span class="info-label">Credit:</span> {{ artwork.credit_line }}</p>
+        {% endif %}
+        
+        {% if artwork.department_title %}
+            <p><span class="info-label">Department:</span> {{ artwork.department_title }}</p>
+        {% endif %}
+        
+        {% if artwork.artwork_type_title %}
+            <p><span class="info-label">Type:</span> {{ artwork.artwork_type_title }}</p>
+        {% endif %}
+        
+        {% if artwork.description %}
+            <div style="margin-top: 20px;">
+                <p class="info-label">Description:</p>
+                <p>{{ artwork.description|safe }}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
