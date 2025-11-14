@@ -4,7 +4,7 @@ from .services import ArtInstituteAPI
 
 def home(request):
     """Main page with search interface"""
-    return render(request, 'artworks/templates/home.html')
+    return render(request, 'home.html')
 
 def search_artworks(request):
     """API endpoint for searching artworks"""
@@ -34,4 +34,4 @@ def artwork_detail(request, artwork_id):
             size="1686"
         )
     
-    return render(request, 'artworks/templates/detail.html', {'artwork': artwork['data']})
+    return render(request, 'detail.html', {'artwork': artwork['data']})
